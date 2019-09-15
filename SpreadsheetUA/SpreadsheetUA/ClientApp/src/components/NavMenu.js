@@ -1,10 +1,33 @@
 import React from 'react';
 import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 import './NavMenu.css';
 
-export default class NavMenu extends React.Component {
+
+const userLinks = (
+    <div>
+        <NavItem>
+            <NavLink tag={Link} className="text-light" to="/login">Logout</NavLink>
+        </NavItem>
+      
+    </div>
+);
+
+
+const guestLinks = (
+    <div>
+        <NavItem>
+            <NavLink tag={Link} className="text-light" to="/registration">Registration</NavLink>
+        </NavItem>
+        <NavItem>
+            <NavLink tag={Link} className="text-light" to="/login">Log in</NavLink>
+        </NavItem>
+    </div>
+);
+
+
+  class NavMenu extends React.Component {
   constructor (props) {
     super(props);
 
@@ -26,11 +49,11 @@ export default class NavMenu extends React.Component {
                     <NavbarBrand  tag={Link} to="/">SpreadsheetUA</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-light" to="/">Home</NavLink>
-                </NavItem>
-              </ul>
+                        <ul className="navbar-nav flex-grow">
+
+                            {this.props.loggedIn ? userLinks : guestLinks}
+                            
+                        </ul>
             </Collapse>
           </Container>
             </Navbar>
@@ -38,3 +61,15 @@ export default class NavMenu extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+    const { loggedIn,user} = state.authentication;
+    return {
+        loggedIn,
+        user
+    };
+}
+export default connect(mapStateToProps)(NavMenu);
+
+
+

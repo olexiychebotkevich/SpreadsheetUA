@@ -1,9 +1,13 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { registration } from '../reducers/registration.reducer';
+import { authentication } from '../reducers/authentication.reducer';
 
 export default function configureStore (history, initialState) {
-  const reducers = {
+    const reducers = {
+        registration,
+        authentication
   };
 
   const middleware = [
