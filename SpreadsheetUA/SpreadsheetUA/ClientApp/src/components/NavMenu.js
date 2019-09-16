@@ -6,24 +6,27 @@ import './NavMenu.css';
 
 
 const userLinks = (
-    <div>
+    <ul className="navbar-nav flex-grow">
+        <NavItem>
+            <NavLink tag={Link} className="text-light" to="/">My office</NavLink>
+        </NavItem>
         <NavItem>
             <NavLink tag={Link} className="text-light" to="/login">Logout</NavLink>
         </NavItem>
-      
-    </div>
+    </ul>
 );
 
 
 const guestLinks = (
-    <div>
+   
+        <ul className="navbar-nav flex-grow">
         <NavItem>
             <NavLink tag={Link} className="text-light" to="/registration">Registration</NavLink>
         </NavItem>
         <NavItem>
             <NavLink tag={Link} className="text-light" to="/login">Log in</NavLink>
         </NavItem>
-    </div>
+        </ul>
 );
 
 
@@ -49,11 +52,11 @@ const guestLinks = (
                     <NavbarBrand  tag={Link} to="/">SpreadsheetUA</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
-                        <ul className="navbar-nav flex-grow">
+                       
 
                             {this.props.loggedIn ? userLinks : guestLinks}
                             
-                        </ul>
+                       
             </Collapse>
           </Container>
             </Navbar>
