@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import { registration } from '../reducers/registration.reducer';
 import { authentication } from '../reducers/authentication.reducer';
+import { addadvert } from '../reducers/advert.reducer';
 
 export default function configureStore (history, initialState) {
     const reducers = {
         registration,
-        authentication
+        authentication,
+        addadvert
   };
 
   const middleware = [

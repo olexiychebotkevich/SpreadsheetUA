@@ -19,6 +19,9 @@ namespace SpreadsheetUA.Entities
         }
 
 
+        public  DbSet<Advert> Adverts { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

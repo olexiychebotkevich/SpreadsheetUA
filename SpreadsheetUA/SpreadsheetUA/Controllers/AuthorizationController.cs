@@ -69,7 +69,7 @@ namespace SpreadsheetUA.Controllers
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
-                resultuser = new UserViewModel { FirstName = user.UserName, Email = user.Email, Token = tokenHandler.WriteToken(token) };
+                resultuser = new UserViewModel { Id=user.Id, FirstName = user.UserName, Email = user.Email, Token = tokenHandler.WriteToken(token) };
             }
 
             return resultuser;

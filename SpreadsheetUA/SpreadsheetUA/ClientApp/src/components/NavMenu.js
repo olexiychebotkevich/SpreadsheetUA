@@ -11,6 +11,9 @@ const userLinks = (
             <NavLink tag={Link} className="text-light" to="/">My office</NavLink>
         </NavItem>
         <NavItem>
+            <NavLink tag={Link} className="text-light" to="/addadvert">Add advert</NavLink>
+        </NavItem>
+        <NavItem>
             <NavLink tag={Link} className="text-light" to="/login">Logout</NavLink>
         </NavItem>
     </ul>
