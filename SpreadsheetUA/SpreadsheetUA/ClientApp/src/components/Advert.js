@@ -13,14 +13,15 @@ class Advert extends React.Component {
         };
     }
   
+  
     render() {
         return (
-            <Card>
+            <Card body outline color="primary">
                 <CardImg top width="100%" src={this.props.image} alt="Card image cap" />
                     <CardBody>
                     <CardTitle>{this.props.title}</CardTitle>
                     <CardText>Category:category</CardText>
-                    <Button>Button</Button>
+                    <Button outline color="primary">Open</Button>
                     </CardBody>
                  </Card>
         );

@@ -33,10 +33,10 @@ namespace SpreadsheetUA.Controllers
 
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody]CredentialsViewModel model)
+        public async Task<IActionResult> Login([FromBody]CredentialsViewModel model)
         {
             Debug.WriteLine("Emeil: " + model.UserName);
-            var user = Authenticate(model.UserName, model.Password);
+            var user = await Authenticate(model.UserName, model.Password);
             if (user != null)
                 return Ok(user);
             else
@@ -45,17 +45,20 @@ namespace SpreadsheetUA.Controllers
 
 
 
-        public UserViewModel Authenticate(string useremail, string password)
+        public async Task<UserViewModel> Authenticate(string useremail, string password)
         {
             UserViewModel resultuser = null;
-            var user = _userManager.FindByEmailAsync(useremail).Result;
 
+            var user = await _userManager.FindByEmailAsync(useremail);
+           
 
             // return null if user not found
             if (user == null)
                 return null;
             // authentication successful so generate jwt token
-            if (_userManager.CheckPasswordAsync(user, password).IsCompletedSuccessfully)
+            var passwordOK = await _userManager.CheckPasswordAsync(user, password);
+           
+            if (passwordOK)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -65,7 +68,7 @@ namespace SpreadsheetUA.Controllers
                     {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                     }),
-                    Expires = DateTime.UtcNow.AddDays(7),
+                    Expires = DateTime.UtcNow.AddHours(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
