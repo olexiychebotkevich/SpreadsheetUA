@@ -77,6 +77,7 @@ namespace SpreadsheetUA.Controllers
         public ICollection<Advert> GetAdverts()
         {
 
+
             var adverts = dbcontext.Adverts.ToList();
             return adverts;
         }
