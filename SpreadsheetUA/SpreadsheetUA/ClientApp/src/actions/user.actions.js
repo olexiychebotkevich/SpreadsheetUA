@@ -51,7 +51,7 @@ function register(user) {
 
                 },
                 error => {
-                    console.log("!!!!user----", error);
+                    console.log("error", error);
                     dispatch(failure(error));
                     dispatch(alertActions.error(error));
                 }

@@ -55,7 +55,7 @@ class RegisterPage extends React.Component {
                     <div  className={'form-group' + (submitted && !user.FirstName ? ' has-error' : '')}>
                         <label htmlFor="FirstName">First Name</label>
                         <input type="text" className="form-control" name="FirstName" value={user.FirstName} onChange={this.handleChange} />
-                        {submitted && !user.FirstName &&
+                        {submitted && !user.FirstName && 
                             <div className="help-block text-danger">First Name is required</div>
                         }
                     </div>

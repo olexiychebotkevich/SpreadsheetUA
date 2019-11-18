@@ -30,24 +30,43 @@ namespace SpreadsheetUA.Controllers
         [HttpPost("registration")]
         public async Task<IActionResult> Reg([FromBody]RegistrationViewModel model)
         {
-
+            DbUser checkemail;
             //var userIdentity = _mapper.Map<DbUser>(model);
-            var userIdentity = new DbUser { Email = model.Email, UserName = model.FirstName };
-            var user = await userManager.CreateAsync(userIdentity,model.Password);
-   
-         
-          
-            if (!user.Succeeded)
+            try
             {
-                foreach (var el in user.Errors)
-                {
-                    return new BadRequestObjectResult(Errors.AddErrorToModelState("Error", el.Description, ModelState));
-                }
+                checkemail = userManager.FindByEmailAsync(model.Email).Result;
             }
-    
-            model.Password = "";
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
-            return Ok(model);
+
+            if (checkemail==null)
+                {
+
+                    var userIdentity = new DbUser { Email = model.Email, UserName = model.FirstName };
+                    var user = await userManager.CreateAsync(userIdentity, model.Password);
+
+
+
+                    if (!user.Succeeded)
+                    {
+                        foreach (var el in user.Errors)
+                        {
+                            return new BadRequestObjectResult(Errors.AddErrorToModelState("Error", el.Description, ModelState));
+                        }
+                    }
+
+                    model.Password = "";
+
+                    return Ok(model);
+                }
+                else
+                    return BadRequest("User from Email " + model.Email + " already exists");
+        
+
+       
         }
     }
 }
