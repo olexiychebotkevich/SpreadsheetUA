@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { connect } from 'react-redux';
-
 import { userActions } from '../actions';
+import './LoginPage.css';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class LoginPage extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        this.setState({ submitted: true });
+        this.setState({ Submitted: true });
         const { UserName, Password } = this.state;
         const { dispatch } = this.props;
         if (UserName && Password) {
@@ -41,21 +41,21 @@ class LoginPage extends React.Component {
         const { loggingIn } = this.props;
         const { UserName, Password, Submitted } = this.state;
         return (
-            <div className="col-md-6 col-md-offset-3">
+            <div align="center" className="col-md-6 col-md-offset-3 form-horizontal">
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (Submitted && !UserName ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="UserName">Username</label>
                         <input type="text" className="form-control" name="UserName" value={UserName} onChange={this.handleChange} />
                         {Submitted && !UserName &&
-                            <div className="help-block">Username is required</div>
+                            <div className="help-block text-danger">Username is required</div>
                         }
                     </div>
                     <div className={'form-group' + (Submitted && !Password ? ' has-error' : '')}>
                         <label htmlFor="Password">Password</label>
                         <input type="Password" className="form-control" name="Password" value={Password} onChange={this.handleChange} />
                         {Submitted && !Password &&
-                            <div className="help-block">Password is required</div>
+                            <div className="help-block text-danger">Password is required</div>
                         }
                     </div>
                     <div className="form-group">
