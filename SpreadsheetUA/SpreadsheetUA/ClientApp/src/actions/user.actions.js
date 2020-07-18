@@ -15,7 +15,8 @@ function login(username, password) {
 
         userService.login(username, password)
             .then(
-                user => {
+            user => {
+                console.log("User: ", user);
                     dispatch(success(user));
                     history.push('/');
                 },
@@ -50,7 +51,7 @@ function register(user) {
 
                 },
                 error => {
-                    console.log("!!!!user----", error);
+                    console.log("error", error);
                     dispatch(failure(error));
                     dispatch(alertActions.error(error));
                 }

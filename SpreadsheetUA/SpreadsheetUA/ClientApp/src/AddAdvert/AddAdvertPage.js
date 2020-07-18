@@ -98,10 +98,9 @@ class AddAdvertPage extends React.Component {
 
                         <img
                             onClick={this.onselectImage}
-                            className="imgUpload"
+                            className="imgUpload  img-thumbnail"
                             src={this.state.Image}
-                            alt=""
-                            width="500px">
+                            alt="">
                         </img>
 
 

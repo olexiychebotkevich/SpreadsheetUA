@@ -12,7 +12,8 @@ namespace SpreadsheetUA.ViewModels.Mappings
         public ViewModelToEntityMappingProfile()
         {
             CreateMap<RegistrationViewModel, DbUser>()
-                .ForMember(au => au.UserName, map => map.MapFrom(vm => vm.FirstName));
+                .ForMember(au => au.UserName, map => map.MapFrom(vm => vm.FirstName))
+                .ForMember(au => au.Email, map => map.MapFrom(vm => vm.Email));
             //CreateMap<AdvertViewModel, Advertisement>()
             //  .ForMember(ad => ad.Name, map => map.MapFrom(adv => adv.Name))
             //  .ForMember(ad => ad.Description, map => map.MapFrom(adv => adv.Description))

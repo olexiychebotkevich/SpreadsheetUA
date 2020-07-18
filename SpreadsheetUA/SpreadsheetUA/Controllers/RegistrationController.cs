@@ -18,31 +18,55 @@ namespace SpreadsheetUA.Controllers
     {
         private readonly UserManager<DbUser> userManager;
         private readonly IMapper _mapper;
+        private readonly SignInManager<DbUser> signInManager;
 
-        public RegistrationController(UserManager<DbUser> userManager, IMapper mapper)
+        public RegistrationController(UserManager<DbUser> userManager, SignInManager<DbUser> _signInManager, IMapper mapper)
         {
             this.userManager = userManager;
+            this.signInManager = _signInManager;
             _mapper = mapper;
         }
 
         [HttpPost("registration")]
         public async Task<IActionResult> Reg([FromBody]RegistrationViewModel model)
         {
-
-            var userIdentity = _mapper.Map<DbUser>(model);
-            var result = await userManager.CreateAsync(userIdentity);
-
-
-            if (!result.Succeeded)
+            DbUser checkemail;
+            //var userIdentity = _mapper.Map<DbUser>(model);
+            try
             {
-                foreach (var el in result.Errors)
-                {
-                    return new BadRequestObjectResult(Errors.AddErrorToModelState("Error", el.Description, ModelState));
-                }
+                checkemail = userManager.FindByEmailAsync(model.Email).Result;
             }
-            model.Password = "";
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
-            return Ok(model);
+
+            if (checkemail==null)
+                {
+
+                    var userIdentity = new DbUser { Email = model.Email, UserName = model.FirstName };
+                    var user = await userManager.CreateAsync(userIdentity, model.Password);
+
+
+
+                    if (!user.Succeeded)
+                    {
+                        foreach (var el in user.Errors)
+                        {
+                            return new BadRequestObjectResult(Errors.AddErrorToModelState("Error", el.Description, ModelState));
+                        }
+                    }
+
+                    model.Password = "";
+
+                    return Ok(model);
+                }
+                else
+                    return BadRequest("User from Email " + model.Email + " already exists");
+        
+
+       
         }
     }
 }
